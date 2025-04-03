@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gömülü Sistemler Dokümantasyonu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-heading,
+        .subsection-heading,
+        .minor-heading {
+            color: #2c3e50;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+        }
+
+        /* Add dark mode styles for headings */
+        body.dark-mode .section-heading,
+        body.dark-mode .subsection-heading,
+        body.dark-mode .minor-heading {
+            color: #e9ecef;
+            /* Light gray, almost white for better visibility */
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode h4,
+        body.dark-mode h5,
+        body.dark-mode h6,
+        body.dark-mode .sidebar-title {
+            color: #f8f9fa;
+            /* Ensure all headings are visible in dark mode */
+        }
+
+        /* Ensure accordion headings are visible in dark mode */
+        body.dark-mode .accordion-button {
+            color: #e9ecef;
+        }
+
+        /* Ensure table headers are visible */
+        body.dark-mode table th {
+            color: #f8f9fa;
+        }
+
+        /* Make strong text stand out properly in dark mode */
+        body.dark-mode strong {
+            color: #f8f9fa;
+        }
+
+        .table {
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-nav {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            top: 20px;
+            position: sticky;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .sidebar-nav {
+            background: #1e1e1e;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-nav:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .sidebar-title {
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .sidebar-title {
+            border-bottom: 2px solid #343a40;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .nav-list .nav-sublist {
+            padding-left: 1.5rem;
+        }
+
+        .nav-link {
+            color: #2c3e50;
+            text-decoration: none;
+            display: block;
+            padding: 0.4rem 0.6rem;
+            margin: 3px 0;
+            border-radius: 4px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nav-sublist .nav-link {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover {
+            color: #0d6efd;
+            background-color: rgba(13, 110, 253, 0.05);
+            border-left: 3px solid #0d6efd;
+            transform: translateX(2px);
+        }
+
+        body.dark-mode .nav-link {
+            color: #e9ecef;
+        }
+
+        body.dark-mode .nav-link:hover {
+            color: #0d6efd;
+            background-color: rgba(13, 110, 253, 0.15);
+            border-left: 3px solid #0d6efd;
+        }
+
+        .nav-link-active {
+            color: #0d6efd;
+            background-color: rgba(13, 110, 253, 0.05);
+            border-left: 3px solid #0d6efd;
+            font-weight: 500;
+        }
+
+        body.dark-mode .nav-link-active {
+            background-color: rgba(13, 110, 253, 0.15);
+        }
+
+        pre,
+        code {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 0.2em 0.4em;
+            font-family: 'Consolas', monospace;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        blockquote {
+            border-left: 4px solid #0d6efd;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #6c757d;
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-mode pre,
+        body.dark-mode code {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode .table {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        body.dark-mode blockquote {
+            color: #cccccc;
+        }
+
+        .float-image-right {
+            float: right;
+            margin: 0 0 15px 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .float-image-right {
+                float: none;
+                display: block;
+                margin: 20px auto;
+                max-width: 100%;
+            }
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            text-align: center;
+            font-style: italic;
+            margin-top: 5px;
+            color: #6c757d;
+        }
+
+        body.dark-mode .image-caption {
+            color: #adb5bd;
+        }
+
+        .image-gallery {
+            position: sticky;
+            top: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item img {
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            height: auto;
+        }
+
+        body.dark-mode .gallery-item img {
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+        }
+
+        .section-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: #0d6efd;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 992px) {
+            .image-gallery {
+                position: static;
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-end py-3">
+            <button id="themeToggle" class="btn btn-secondary">🌙</button>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="sidebar-nav">
+                    <h4 class="sidebar-title">İçindekiler</h4>
+                    <ul class="nav-list">
+                        <li><a href="#giris" class="nav-link">Gömülü Sistemlere Giriş</a></li>
+                        <li><a href="#temel-bilesenler" class="nav-link">Temel Bileşenler</a></li>
+                        <li><a href="#gereksinimler" class="nav-link">Sistem Gereksinimleri</a></li>
+                        <li><a href="#kartlar" class="nav-link">Gömülü Sistemlerde Kartlar</a>
+                            <ul class="nav-sublist">
+                                <li><a href="#yaygin-kartlar" class="nav-link">Yaygın Kartlar</a></li>
+                                <li><a href="#karsilastirma" class="nav-link">Karşılaştırmalı Özellikler</a></li>
+                                <li><a href="#yetenekler" class="nav-link">Yetenekler ve Kısıtlamalar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#donanim-secimi" class="nav-link">Donanım Seçimi</a></li>
+                        <li><a href="#hiz-farklari" class="nav-link">Hız Farkları</a></li>
+                        <li><a href="#gelistirme-ortamlari" class="nav-link">Geliştirme Ortamları</a></li>
+                        <li><a href="#arduino-ide" class="nav-link">Arduino IDE</a></li>
+                        <li><a href="#ai-iot" class="nav-link">Yapay Zeka ve IoT</a></li>
+                        <li><a href="#uygulanabilirlik" class="nav-link">Uygulanabilirlik</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <main>
+                    <center>
+                        <h1 class="section-heading">Gömülü Sistemler</h1>
+                    </center>
+                    <h1 class="section-heading">Temel Bilgiler, Gereksinimler, Yapı, Kartlar,
+                        Geliştirme Ortamları
+                        ve Uygulama Alanları</h1>
+
+                    <section id="giris" class="content-section">
+                        <h2 class="subsection-heading">Gömülü Sistemlere Giriş</h2>
+                        <p>Gömülü sistemler, belirli bir görevi yerine getirmek üzere tasarlanmış, donanım ve yazılım
+                            bileşenlerinden oluşan özel amaçlı sistemlerdir. İlk örnekleri 1960'lı yıllara dayanan bu
+                            sistemlerin öncüsü, 1961'de Charles Stark Draper Laboratuvarı tarafından geliştirilen Apollo
+                            Kılavuzluk Bilgisayarı'dır. Günümüzde otomotiv, sağlık, telekomünikasyon, tüketici
+                            elektroniği ve endüstriyel otomasyon gibi çeşitli sektörlerde yaygın olarak
+                            kullanılmaktadırlar. Düşük maliyet, yüksek performans ve enerji verimliliği gibi
+                            avantajları, gömülü sistemlerin kullanımını giderek artırmaktadır.</p>
+                    </section>
+
+                    <section id="temel-bilesenler" class="content-section">
+                        <h2 class="subsection-heading">Gömülü Sistemlerin Temel Bileşenleri</h2>
+                        <ol>
+                            <li><strong>Mikrodenetleyici (Microcontroller):</strong> Gömülü sistemlerin merkezi işlem
+                                birimidir (CPU). İşlemci, bellek ve giriş/çıkış birimlerini içerir.</li>
+                            <li><strong>Sensörler:</strong> Çevresel verileri toplayarak dijital sinyallere dönüştürür
+                                ve mikrodenetleyiciye iletir.</li>
+                            <li><strong>Aktüatörler:</strong> Elektriksel sinyalleri mekanik harekete dönüştürerek
+                                sistemin çevreyle etkileşime girmesini sağlar.</li>
+                            <li><strong>Hafıza Birimleri:</strong> Verilerin geçici veya kalıcı olarak saklanmasını
+                                sağlar. Flash bellek, EEPROM ve SRAM gibi farklı türleri bulunur.</li>
+                            <li><strong>Güç Kaynağı:</strong> Sistemin çalışması için gerekli enerjiyi sağlar. Pil,
+                                adaptör veya enerji toplama yöntemleriyle sağlanabilir.</li>
+                            <li><strong>Haberleşme Modülleri:</strong> Sistemin diğer cihazlarla veya ağlarla iletişim
+                                kurmasını sağlar. Wi-Fi, Bluetooth, Zigbee gibi protokolleri destekler.</li>
+                            <li><strong>Giriş/Çıkış Birimleri (I/O Devices):</strong> Kullanıcıların sistemle etkileşime
+                                geçmesini sağlar. Düğmeler, anahtarlar, ekranlar gibi cihazları içerir.</li>
+                            <li><strong>Geliştirme Kartları:</strong> Sistemin prototiplenmesi ve test edilmesi için
+                                kullanılır. Arduino, Raspberry Pi gibi kartlar bu amaçla kullanılır.</li>
+                        </ol>
+                    </section>
+
+                    <section id="gereksinimler" class="content-section">
+                        <h2 class="subsection-heading">Gömülü Sistemlerin Gereksinimleri</h2>
+                        <ol>
+                            <li><strong>Güvenilirlik:</strong> Gömülü sistemlerin kesintisiz ve doğru bir şekilde
+                                çalışması gereklidir. Özellikle kritik uygulamalarda güvenilirlik büyük önem taşır.</li>
+                            <li><strong>Enerji Verimliliği:</strong> Gömülü sistemler genellikle pil ile çalıştığından,
+                                düşük güç tüketimi önemlidir. Enerji verimliliği, sistemin uzun süre çalışmasını sağlar.
+                            </li>
+                            <li><strong>Gerçek Zamanlı İşlem:</strong> Birçok gömülü sistem, belirli bir zaman diliminde
+                                tepki vermesi gereken gerçek zamanlı uygulamalar için tasarlanır. Bu nedenle, zamanlama
+                                ve hızlı işlem yetenekleri önemlidir.</li>
+                            <li><strong>Ölçeklenebilirlik:</strong> Gömülü sistemlerin farklı uygulamalara adaptasyonunu
+                                kolaylaştırmak için ölçeklenebilir olması gereklidir. Donanım ve yazılım bileşenleri,
+                                farklı gereksinimlere göre uyarlanabilir olmalıdır.</li>
+                            <li><strong>Maliyet Etkinliği:</strong> Gömülü sistemlerin üretim ve bakım maliyetleri düşük
+                                olmalıdır. Bu, özellikle geniş çaplı üretimlerde ve tüketici elektroniği gibi alanlarda
+                                önemlidir.</li>
+                        </ol>
+                    </section>
+
+                    <section id="kartlar" class="content-section">
+                        <h2 class="subsection-heading">Gömülü Sistemlerde Kullanılan Kartlar</h2>
+                        <h3 class="minor-heading">Yaygın Gömülü Sistem Kartları</h3>
+                        <ul>
+                            <li><strong>Arduino:</strong> Açık kaynaklı donanım ve yazılımlarıyla bilinir. Kolay
+                                kullanılabilirliği ve geniş topluluk desteği sayesinde hobi projelerinden profesyonel
+                                uygulamalara kadar geniş bir yelpazede tercih edilir.</li>
+                            <li><strong>Raspberry Pi:</strong> Tam teşekküllü bir mini bilgisayardır. Yüksek işlem gücü
+                                ve geniş bağlantı seçenekleri sunar.</li>
+                            <li><strong>ESP32:</strong> Düşük maliyetli ve yüksek performanslı bir Wi-Fi ve Bluetooth
+                                mikrodenetleyicisidir.</li>
+                            <li><strong>STM32 Discovery:</strong> STMicroelectronics tarafından üretilen
+                                mikrodenetleyici geliştirme kartlarıdır.</li>
+                            <li><strong>BeagleBone:</strong> Yüksek performans ve geniş I/O seçenekleri sunar.</li>
+                        </ul>
+                    </section>
+
+                    <section id="karsilastirma" class="content-section">
+                        <h2 class="subsection-heading">Kartların Karşılaştırmalı Özellikleri</h2>
+                        <table class="table table-striped" id="comparisonTable">
+                            <thead>
+                                <tr>
+                                    <th>Kart</th>
+                                    <th>Kullanım Kolaylığı</th>
+                                    <th>İşlem Gücü</th>
+                                    <th>Bağlantı Seçenekleri</th>
+                                    <th>Uygulama Alanları</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Arduino</td>
+                                    <td>Kolay</td>
+                                    <td>Düşük</td>
+                                    <td>Sınırlı</td>
+                                    <td>Eğitim, hobi projeleri, prototipleme</td>
+                                </tr>
+                                <tr>
+                                    <td>Raspberry Pi</td>
+                                    <td>Orta</td>
+                                    <td>Yüksek</td>
+                                    <td>Geniş</td>
+                                    <td>Multimedya, IoT, ev otomasyonu</td>
+                                </tr>
+                                <tr>
+                                    <td>STM32 Discovery</td>
+                                    <td>Orta</td>
+                                    <td>Yüksek</td>
+                                    <td>Orta</td>
+                                    <td>Endüstriyel uygulamalar</td>
+                                </tr>
+                                <tr>
+                                    <td>BeagleBone</td>
+                                    <td>Orta</td>
+                                    <td>Yüksek</td>
+                                    <td>Geniş</td>
+                                    <td>Endüstriyel otomasyon</td>
+                                </tr>
+                                <tr>
+                                    <td>ESP32</td>
+                                    <td>Kolay</td>
+                                    <td>Orta</td>
+                                    <td>Sınırlı</td>
+                                    <td>Kablosuz iletişim, IoT</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section id="yetenekler" class="content-section">
+                        <h2 class="subsection-heading">Kartların Yetenekleri ve Kısıtlamaları</h2>
+                        <div class="accordion" id="kartlarAccordion">
+                            <div class="accordion-item" id="accordionItem1">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseArduino" aria-expanded="false"
+                                        aria-controls="collapseArduino">
+                                        Arduino
+                                    </button>
+                                </h2>
+                                <div id="collapseArduino" class="accordion-collapse collapse"
+                                    data-bs-parent="#kartlarAccordion">
+                                    <div class="accordion-body">
+                                        <h5>Yapabildikleri:</h5>
+                                        <ul>
+                                            <li>Kolay Kullanım: Basit programlama dili ve geniş topluluk desteği
+                                                sayesinde
+                                                hızlı prototipleme sağlar.</li>
+                                            <li>Çeşitli Sensör ve Aktüatör Desteği: Analog ve dijital giriş/çıkış
+                                                pinleri
+                                                ile birçok sensör ve aktüatör ile uyumlu çalışır.</li>
+                                            <li>Geniş Donanım Çeşitliliği: Farklı ihtiyaçlara yönelik çeşitli Arduino
+                                                modelleri bulunur.</li>
+                                        </ul>
+                                        <h5>Yapamadıkları:</h5>
+                                        <ul>
+                                            <li>Yüksek İşlem Gücü Gerektiren Uygulamalar: Karmaşık ve yüksek işlem gücü
+                                                gerektiren uygulamalarda yetersiz kalabilir.</li>
+                                            <li>İleri Düzey Grafik ve Multimedya İşlemleri: Grafik ve multimedya
+                                                işlemleri
+                                                için yeterli donanıma sahip değildir.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item" id="accordionItem2">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseRaspberryPi" aria-expanded="false"
+                                        aria-controls="collapseRaspberryPi">
+                                        Raspberry Pi
+                                    </button>
+                                </h2>
+                                <div id="collapseRaspberryPi" class="accordion-collapse collapse"
+                                    data-bs-parent="#kartlarAccordion">
+                                    <div class="accordion-body">
+                                        <h5>Yapabildikleri:</h5>
+                                        <ul>
+                                            <li>Yüksek İşlem Gücü: Tam teşekküllü bir mini bilgisayar olarak yüksek
+                                                işlem
+                                                gücü sunar.</li>
+                                            <li>Geniş Bağlantı Seçenekleri: HDMI, USB, Ethernet gibi çeşitli bağlantı
+                                                noktaları ile geniş uygulama yelpazesi sunar.</li>
+                                            <li>İşletim Sistemi Desteği: Linux tabanlı işletim sistemleri
+                                                çalıştırabilir, bu
+                                                da daha karmaşık projeler için idealdir.</li>
+                                        </ul>
+                                        <h5>Yapamadıkları:</h5>
+                                        <ul>
+                                            <li>Düşük Güç Tüketimi Gerektiren Uygulamalar: Göreceli olarak yüksek güç
+                                                tüketimi nedeniyle pil ile uzun süreli çalışmalarda uygun olmayabilir.
+                                            </li>
+                                            <li>Gerçek Zamanlı İşlemler: Gerçek zamanlı işlem gereksinimleri olan
+                                                uygulamalarda, mikrodenetleyiciler kadar hassas ve güvenilir
+                                                olmayabilir.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item" id="accordionItem3">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSTM32" aria-expanded="false"
+                                        aria-controls="collapseSTM32">
+                                        STM32 Discovery
+                                    </button>
+                                </h2>
+                                <div id="collapseSTM32" class="accordion-collapse collapse"
+                                    data-bs-parent="#kartlarAccordion">
+                                    <div class="accordion-body">
+                                        <h5>Yapabildikleri:</h5>
+                                        <ul>
+                                            <li>Yüksek Performans: ARM Cortex-M serisi işlemciler ile yüksek performans
+                                                sunar.</li>
+                                            <li>Gerçek Zamanlı İşlem: Endüstriyel ve gerçek zamanlı uygulamalar için
+                                                uygundur.</li>
+                                            <li>Geniş Kütüphane ve Araç Desteği: Gelişmiş kütüphane ve araç desteği ile
+                                                çeşitli uygulamalara entegre edilebilir.</li>
+                                        </ul>
+                                        <h5>Yapamadıkları:</h5>
+                                        <ul>
+                                            <li>Kapsamlı Multimedya İşlemleri: Multimedya işlemleri için uygun değildir.
+                                            </li>
+                                            <li>Geniş Topluluk Desteği Eksikliği: Arduino ve Raspberry Pi kadar geniş
+                                                bir
+                                                topluluk desteği bulunmayabilir.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item" id="accordionItem4">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseBeagleBone" aria-expanded="false"
+                                        aria-controls="collapseBeagleBone">
+                                        BeagleBone
+                                    </button>
+                                </h2>
+                                <div id="collapseBeagleBone" class="accordion-collapse collapse"
+                                    data-bs-parent="#kartlarAccordion">
+                                    <div class="accordion-body">
+                                        <h5>Yapabildikleri:</h5>
+                                        <ul>
+                                            <li>Yüksek Performans: Güçlü işlemcileri ve geniş I/O seçenekleri ile yüksek
+                                                performans sunar.</li>
+                                            <li>Endüstriyel Uygulamalar: Endüstriyel otomasyon ve kontrol uygulamaları
+                                                için
+                                                idealdir.</li>
+                                            <li>İşletim Sistemi Desteği: Linux tabanlı işletim sistemleri
+                                                çalıştırabilir.
+                                            </li>
+                                        </ul>
+                                        <h5>Yapamadıkları:</h5>
+                                        <ul>
+                                            <li>Düşük Güç Tüketimi Gerektiren Uygulamalar: Yüksek güç tüketimi nedeniyle
+                                                pil
+                                                ile uzun süreli çalışmalarda uygun olmayabilir.</li>
+                                            <li>Basit ve Hızlı Prototipleme: Arduino kadar basit ve hızlı prototipleme
+                                                imkanı sunmayabilir.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item" id="accordionItem5">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseESP32" aria-expanded="false"
+                                        aria-controls="collapseESP32">
+                                        ESP32
+                                    </button>
+                                </h2>
+                                <div id="collapseESP32" class="accordion-collapse collapse"
+                                    data-bs-parent="#kartlarAccordion">
+                                    <div class="accordion-body">
+                                        <h5>Yapabildikleri:</h5>
+                                        <ul>
+                                            <li>Kablosuz İletişim: Wi-Fi ve Bluetooth desteği ile kablosuz iletişim
+                                                gerektiren projeler için uygundur.</li>
+                                            <li>Düşük Maliyet ve Güç Tüketimi: Düşük maliyetli ve enerji verimli bir
+                                                çözümdür.</li>
+                                            <li>Geniş Topluluk Desteği: Geniş bir topluluk ve çeşitli geliştirme
+                                                araçları
+                                                sunar.</li>
+                                        </ul>
+                                        <h5>Yapamadıkları:</h5>
+                                        <ul>
+                                            <li>Yüksek İşlem Gücü Gerektiren Uygulamalar: Raspberry Pi kadar yüksek
+                                                işlem
+                                                gücü sunmaz.</li>
+                                            <li>Kapsamlı Bağlantı Seçenekleri: HDMI ve Ethernet gibi geniş bağlantı
+                                                seçeneklerine sahip değildir.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="donanim-secimi" class="content-section">
+                        <h2 class="subsection-heading">Proje Tabanlı Donanım Seçimi</h2>
+                        <p>Gömülü sistem projelerinde kullanılan donanımın seçimi, projenin gereksinimlerine ve
+                            özelliklerine bağlı olarak değişir:</p>
+                        <ul>
+                            <li><strong>Arduino:</strong> Eğitim projeleri, hobi projeleri, prototipleme.</li>
+                            <li><strong>Raspberry Pi:</strong> Multimedya uygulamaları, IoT ve ev otomasyonu, eğitim ve
+                                araştırma.</li>
+                            <li><strong>STM32 Discovery:</strong> Endüstriyel uygulamalar, gerçek zamanlı işlemler,
+                                gelişmiş prototipleme.</li>
+                            <li><strong>BeagleBone:</strong> Endüstriyel otomasyon, gelişmiş IoT uygulamaları, eğitim ve
+                                araştırma.</li>
+                            <li><strong>ESP32:</strong> Kablosuz iletişim, IoT uygulamaları, düşük güç tüketimi
+                                gerektiren projeler.</li>
+                        </ul>
+                    </section>
+
+                    <section id="hiz-farklari" class="content-section">
+                        <h2 class="subsection-heading">Kartlar Arasındaki Hız Farkları</h2>
+                        <p>Gömülü sistem projelerinde kullanılan çeşitli kartlar arasında hız farkları bulunmaktadır:
+                        </p>
+                        <ul>
+                            <li><strong>Arduino:</strong> 16 MHz - 48 MHz (Düşük hız, basit projeler için uygun)</li>
+                            <li><strong>Raspberry Pi:</strong> 1.2 GHz - 2.4 GHz (Yüksek işlem gücü, karmaşık projeler
+                                için ideal)</li>
+                            <li><strong>STM32 Discovery:</strong> 72 MHz - 480 MHz (Orta-yüksek hız, gerçek zamanlı ve
+                                endüstriyel projeler için uygun)</li>
+                            <li><strong>BeagleBone:</strong> 1 GHz (Yüksek hız, endüstriyel ve IoT projeleri için ideal)
+                            </li>
+                            <li><strong>ESP32:</strong> 160 MHz - 240 MHz (Orta hız, kablosuz iletişim ve düşük
+                                maliyetli
+                                projeler için uygun)</li>
+                        </ul>
+                    </section>
+
+                    <section id="gelistirme-ortamlari" class="content-section">
+                        <h2 class="subsection-heading">Geliştirme Ortamları ve Linux Desteği</h2>
+                        <p>Gömülü sistem projelerinde kullanılan geliştirme ortamları ve bazı kartların Linux desteği
+                            hakkında bilgiler:</p>
+                        <h3 class="minor-heading">Geliştirme Ortamları</h3>
+                        <ul>
+                            <li><strong>Arduino:</strong> Arduino IDE (Kolay kullanım, geniş kütüphane desteği, geniş
+                                topluluk desteği)</li>
+                            <li><strong>ESP32:</strong> ESP-IDF (FreeRTOS tabanlı, kablosuz iletişim, gelişmiş araç
+                                seti)</li>
+                            <li><strong>Raspberry Pi:</strong> Raspberry Pi OS ve Visual Studio Code (Gelişmiş projeler
+                                ve multimedya uygulamaları, geniş Linux desteği)</li>
+                        </ul>
+                        <h3 class="minor-heading">Linux Desteği</h3>
+                        <ul>
+                            <li><strong>Raspberry Pi:</strong> Debian tabanlı, çoklu dil desteği, geniş bağlantı
+                                seçenekleri</li>
+                        </ul>
+                    </section>
+
+                    <section id="arduino-ide" class="content-section">
+                        <h2 class="subsection-heading">Arduino IDE ve İşleyişi</h2>
+                        <p><strong>Arduino IDE (Integrated Development Environment)</strong>, Arduino kartları için özel
+                            olarak tasarlanmış, açık kaynak kodlu bir geliştirme ortamıdır. Temelde C ve C++ dillerini
+                            temel alır ve kod yazma, derleme ve Arduino kartına yükleme süreçlerini basitleştirir.</p>
+                        <ul>
+                            <li><strong>Arduino Bootloader:</strong> Arduino kartlarının üzerinde bulunan ve kartın
+                                başlatılmasını sağlayan küçük bir programdır. Bilgisayardan gönderilen yeni kodların
+                                kartın hafızasına yazılmasını yönetir.
+                                <ul>
+                                    <li><em>İşlevi:</em> Kartın enerji verildiğinde başlamasını sağlar, bilgisayar ile
+                                        iletişim kurarak yeni programların yüklenmesini mümkün kılar.</li>
+                                </ul>
+                            </li>
+                            <li><strong>C/C++ Kodlarının Çalıştırılması:</strong> Arduino IDE'de yazılan C/C++ kodları,
+                                derleyici (compiler) aracılığıyla makine koduna çevrilir ve Arduino kartına yüklenir.
+                                <ul>
+                                    <li><em>Süreç:</em>
+                                        <ol>
+                                            <li>Kod yazılır ve Arduino IDE'de derlenir.</li>
+                                            <li>Derlenen kod, bootloader aracılığıyla Arduino kartının hafızasına
+                                                (genellikle
+                                                Flash bellek) yazılır.</li>
+                                            <li>Kart yeniden başlatıldığında, bootloader yeni kodu çalıştırır.</li>
+                                        </ol>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Setup ve Loop Fonksiyonları:</strong>
+                                <ul>
+                                    <li><code>setup()</code>: Programın başlangıcında sadece bir kez çalışır.
+                                        Giriş/çıkış pinlerinin ayarlanması, seri haberleşme başlatılması gibi işlemler
+                                        bu
+                                        fonksiyon içinde yapılır.</li>
+                                    <li><code>loop()</code>: <code>setup()</code> fonksiyonu tamamlandıktan sonra
+                                        sürekli
+                                        olarak tekrar eden ana program döngüsüdür. Sensörlerden veri okuma, motorları
+                                        kontrol etme, LED'leri yakıp söndürme gibi işlemler bu fonksiyon içinde
+                                        gerçekleştirilir.</li>
+                                    <li><em>Çalışma Prensibi:</em> Arduino programı başladığında, önce
+                                        <code>setup()</code> fonksiyonu çalışır. Daha sonra, <code>loop()</code>
+                                        fonksiyonu
+                                        sürekli olarak tekrarlanır. Bu döngü, kartın enerjisi kesilene kadar devam eder.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section id="ai-iot" class="content-section">
+                        <h2 class="subsection-heading">Arduino ile Yapay Zeka ve IoT Projeleri</h2>
+                        <ul>
+                            <li><strong>Arduino ile Yapay Zeka Projeleri:</strong>
+                                <ul>
+                                    <li>Arduino'nun sınırlı işlem gücü ve hafızası nedeniyle karmaşık yapay zeka
+                                        projeleri doğrudan Arduino üzerinde çalıştırmak zordur. Ancak, basit
+                                        algoritmalar
+                                        (örneğin, basit bir sinir ağı veya karar ağacı) veya önceden eğitilmiş
+                                        modellerin
+                                        çıkarım (inference) işlemleri Arduino üzerinde gerçekleştirilebilir.
+                                        <ul>
+                                            <li><em>Nasıl Yapılır:</em> TensorFlow Lite Micro gibi kütüphaneler
+                                                kullanılarak,
+                                                küçük boyutlu ve optimize edilmiş yapay zeka modelleri Arduino'ya
+                                                yüklenebilir.</li>
+                                        </ul>
+                                    </li>
+                                    <li>Daha karmaşık yapay zeka uygulamaları için, Arduino sensör verilerini toplayıp
+                                        bir
+                                        bilgisayara veya bulut platformuna gönderebilir ve yapay zeka işlemleri bu
+                                        ortamlarda gerçekleştirilebilir.
+                                        <ul>
+                                            <li><em>Neden Karmaşık AI Modelleri Doğrudan Çalışmaz:</em> Arduino'nun
+                                                sınırlı
+                                                kaynakları (RAM, işlemci hızı) nedeniyle, büyük ve karmaşık AI modelleri
+                                                pratik olarak çalıştırılamaz.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Arduino Uno ile IoT Projeleri:</strong>
+                                <ul>
+                                    <li>Arduino Uno, sınırlı kaynaklara sahip olduğu için doğrudan Wi-Fi veya Bluetooth
+                                        bağlantısı sunmaz. Bu nedenle, IoT projeleri için ek modüller (örneğin, ESP8266
+                                        Wi-Fi modülü) kullanılması gerekir.
+                                        <ul>
+                                            <li><em>Ek Modüller ile IoT:</em> ESP8266 gibi modüller, Arduino Uno'ya
+                                                Wi-Fi
+                                                yeteneği kazandırarak internete bağlanmasını ve veri
+                                                göndermesini/almasını
+                                                sağlar.</li>
+                                        </ul>
+                                    </li>
+                                    <li>Arduino Uno ile sıcaklık, nem, ışık gibi sensör verilerini toplayıp bu verileri
+                                        bir IoT platformuna gönderebilir ve uzaktan izleme veya kontrol uygulamaları
+                                        geliştirebilirsiniz.
+                                        <ul>
+                                            <li><em>Örnek Uygulamalar:</em>
+                                                <ul>
+                                                    <li>Ev otomasyonu (ışık kontrolü, sıcaklık izleme)</li>
+                                                    <li>Çevresel izleme (hava kalitesi, toprak nemi)</li>
+                                                    <li>Akıllı tarım (sensör verileriyle sulama kontrolü)</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section id="uygulanabilirlik" class="content-section">
+                        <h2 class="subsection-heading">Gömülü Sistem Projelerinin Uygulanabilirliğinin Ölçülmesi</h2>
+                        <p>Gömülü sistem projelerinin uygulanabilirliğini ölçmek için çeşitli faktörler dikkate alınır:
+                        </p>
+                        <ol>
+                            <li><strong>Performans:</strong> Sistemin belirlenen görevleri ne kadar hızlı ve verimli bir
+                                şekilde yerine getirdiği.
+                                <ul>
+                                    <li><em>Ölçütler:</em> İşlem hızı, tepki süresi, veri işleme kapasitesi.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Güvenilirlik:</strong> Sistemin ne kadar süreyle hatasız çalıştığı ve arızalara
+                                karşı ne kadar dayanıklı olduğu.
+                                <ul>
+                                    <li><em>Ölçütler:</em> Ortalama arızalar arası süre (MTBF), hata toleransı,
+                                        yedekleme
+                                        mekanizmaları.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Güç Tüketimi:</strong> Sistemin ne kadar enerji tükettiği ve pil ömrünün ne
+                                kadar
+                                uzun olduğu (özellikle mobil uygulamalar için önemlidir).
+                                <ul>
+                                    <li><em>Ölçütler:</em> Aktif modda tüketilen güç, uyku modunda tüketilen güç, pil
+                                        ömrü.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Maliyet:</strong> Sistemin donanım, yazılım ve üretim maliyetleri.
+                                <ul>
+                                    <li><em>Ölçütler:</em> Bileşen maliyetleri, geliştirme maliyetleri, üretim
+                                        maliyetleri.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Boyut ve Ağırlık:</strong> Sistemin fiziksel boyutu ve ağırlığı (özellikle
+                                taşınabilir veya küçük cihazlar için önemlidir).
+                                <ul>
+                                    <li><em>Ölçütler:</em> Hacim, yüzey alanı, ağırlık.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Gerçek Zamanlılık:</strong> Sistemin belirli olaylara zamanında tepki verme
+                                yeteneği
+                                (gerçek zamanlı uygulamalar için önemlidir).
+                                <ul>
+                                    <li><em>Ölçütler:</em> En kötü durum tepki süresi, jitter.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Güvenlik:</strong> Sistemin yetkisiz erişime ve saldırılara karşı ne kadar
+                                güvenli
+                                olduğu.
+                                <ul>
+                                    <li><em>Ölçütler:</em> Şifreleme yöntemleri, kimlik doğrulama mekanizmaları,
+                                        güvenlik
+                                        açıkları.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Ölçeklenebilirlik:</strong> Sistemin yeni özellikler veya daha fazla yük ile
+                                başa
+                                çıkabilme yeteneği.
+                                <ul>
+                                    <li><em>Ölçütler:</em> Modüler tasarım, kaynak yönetimi, esneklik.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <p>Bu faktörler, projenin gereksinimlerine ve önceliklerine göre farklı ağırlıklara sahip
+                            olabilir. Uygulanabilirlik değerlendirmesi, bu faktörlerin dengeli bir şekilde analiz
+                            edilmesini ve projenin hedeflerine ulaşma potansiyelinin belirlenmesini içerir.</p>
+                    </section>
+                </main>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="image-gallery">
+                    <h4 class="mb-4">İlgili Görseller</h4>
+
+                    <div class="gallery-item" data-section="giris">
+                        <span class="section-indicator"></span>
+                        <span class="small">İlk Gömülü Sistem Kartı</span>
+                        <img src="image/apollo.jpg" alt="Apollo Kılavuzluk Bilgisayarı" class="img-fluid mb-2">
+                        <p class="image-caption">Apollo Kılavuzluk Bilgisayarı - İlk modern gömülü sistemlerden biri</p>
+                    </div>
+
+                    <div class="gallery-item" data-section="kartlar">
+                        <span class="section-indicator"></span>
+                        <span class="small">Gömülü Kartlar</span>
+                        <img src="image/DHCOM_Computer_On_Module_-_AM35x.jpg" alt="Gömülü Sistem Kartları"
+                            class="img-fluid mb-2">
+                        <p class="image-caption">Gömülü sistemlerde kullanılan çeşitli geliştirme kartları</p>
+                    </div>
+
+                    <div class="gallery-item" data-section="karsilastirma">
+                        <span class="section-indicator"></span>
+                        <span class="small">Arduino</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Arduino_Uno_-_R3.jpg/1200px-Arduino_Uno_-_R3.jpg"
+                            alt="Arduino Uno" class="img-fluid mb-2">
+                        <p class="image-caption">Arduino UNO - Yaygın kullanılan bir gömülü sistem kartı</p>
+                    </div>
+
+                    <div class="gallery-item" data-section="yetenekler">
+                        <span class="section-indicator"></span>
+                        <span class="small">Raspberry pi </span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Raspberry_Pi_4_Model_B_-_Side.jpg/1024px-Raspberry_Pi_4_Model_B_-_Side.jpg"
+                            alt="Raspberry Pi 4" class="img-fluid mb-2">
+                        <p class="image-caption">Raspberry Pi 4 - Çok amaçlı mini bilgisayar</p>
+                    </div>
+
+                    <div class="gallery-item" data-section="hiz-farklari">
+                        <span class="section-indicator"></span>
+                        <span class="small">ESP32</span>
+                        <img src="image/esp32.jpg" alt="ESP32 Kart" class="img-fluid mb-2">
+                        <p class="image-caption">ESP32 - Kablosuz haberleşme özellikleriyle öne çıkan mikrodenetleyici
+                        </p>
+                    </div>
+
+                    <div class="gallery-item" data-section="arduino-ide">
+                        <span class="section-indicator"></span>
+                        <span class="small">Arduino IDE</span>
+                        <img src="image/arduino-ide.png" alt="Arduino IDE" class="img-fluid mb-2">
+                        <p class="image-caption">Arduino IDE - Arduino kartları için geliştirme ortamı</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 py-3" id="footer">
+        <p class="mb-0">Dokümantasyon yazarı: <strong>Bekir Şahin</strong></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const footer = document.getElementById('footer');
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+
+            if (isDarkMode) {
+                htmlElement.setAttribute('data-bs-theme', 'dark');
+            } else {
+                htmlElement.setAttribute('data-bs-theme', 'light');
+            }
+
+            if (isDarkMode) {
+                footer.classList.add('bg-dark', 'text-light');
+                footer.classList.remove('bg-light', 'text-dark');
+            } else {
+                footer.classList.add('bg-light', 'text-dark');
+                footer.classList.remove('bg-dark', 'text-light');
+            }
+
+            themeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        });
+
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.content-section');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+
+                if (window.scrollY >= sectionTop - 100 && window.scrollY < sectionTop + sectionHeight - 100) {
+                    const sectionId = section.getAttribute('id');
+
+                    galleryItems.forEach(item => {
+                        if (item.getAttribute('data-section') === sectionId) {
+                            item.style.transform = 'scale(1.05)';
+                        } else {
+                            item.style.transform = 'scale(1)';
+                        }
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.content-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let currentSectionId = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('nav-link-active');
+                const href = link.getAttribute('href');
+                if (href === `#${currentSectionId}`) {
+                    link.classList.add('nav-link-active');
+                }
+            });
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                const yOffset = -80;
+                const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+
+</html>
